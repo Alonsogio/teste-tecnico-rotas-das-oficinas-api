@@ -7,5 +7,10 @@ namespace RO.DevTest.Domain.Entities
     public string Email { get; set; } = string.Empty;
     public string Telefone { get; set; } = string.Empty;
     public DateTime CriadoEm { get; set; } = DateTime.UtcNow;
-  }
+
+        public static object Where(Func<object, bool> value)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

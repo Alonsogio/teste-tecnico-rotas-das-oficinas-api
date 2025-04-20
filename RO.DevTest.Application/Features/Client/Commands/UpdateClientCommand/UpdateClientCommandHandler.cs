@@ -1,9 +1,9 @@
 using MediatR;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
 
-namespace RO.DevTest.Application.Features.Client.Commands.UpdateClientCommand
+namespace RO.DevTest.Application.Features.Clients.Commands.UpdateClientCommand
 {
-  public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand>
+  public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand, Unit>
   {
     private readonly IClientRepository _clientRepository;
 

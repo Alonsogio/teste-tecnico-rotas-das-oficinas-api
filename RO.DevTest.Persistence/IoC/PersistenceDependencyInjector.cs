@@ -3,7 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace RO.DevTest.Persistence.IoC;
 
-public static class PersistenceDependencyInjector {
+public static class PersistenceDependencyInjector
+{
     /// <summary>
     /// Inject the dependencies of the Persistence layer into an
     /// <see cref="IServiceCollection"/>
@@ -14,8 +15,10 @@ public static class PersistenceDependencyInjector {
     /// <returns>
     /// The <see cref="IServiceCollection"/> with dependencies injected
     /// </returns>
-    public static IServiceCollection InjectPersistenceDependencies(this IServiceCollection services) {
+    public static IServiceCollection InjectPersistenceDependencies(this IServiceCollection services)
+    {
         services.AddDbContext<DefaultContext>(options => options.UseInMemoryDatabase("rota"));
+
 
         return services;
     }

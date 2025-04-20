@@ -1,8 +1,8 @@
 using MediatR;
 
-namespace RO.DevTest.Application.Features.Clientes.Commands.UpdateClienteCommand
+namespace RO.DevTest.Application.Features.Clients.Commands.UpdateClientCommand
 {
-  public class UpdateClienteCommand : IRequest
+  public class UpdateClientCommand : IRequest<Unit>
   {
     public Guid Id { get; set; }
     public string Nome { get; set; } = string.Empty;

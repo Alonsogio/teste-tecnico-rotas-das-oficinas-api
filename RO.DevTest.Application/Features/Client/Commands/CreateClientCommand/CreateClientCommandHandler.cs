@@ -2,7 +2,7 @@ using MediatR;
 using RO.DevTest.Domain.Entities;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
 
-namespace RO.DevTest.Application.Features.Client.Commands.CreateClientCommand
+namespace RO.DevTest.Application.Features.Clients.Commands.CreateClientCommand
 {
   public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Guid>
   {

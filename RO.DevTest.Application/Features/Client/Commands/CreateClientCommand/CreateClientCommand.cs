@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace RO.DevTest.Application.Features.Client.Commands.CreateClientCommand
+namespace RO.DevTest.Application.Features.Clients.Commands.CreateClientCommand
 {
   public class CreateClientCommand : IRequest<Guid>
   {

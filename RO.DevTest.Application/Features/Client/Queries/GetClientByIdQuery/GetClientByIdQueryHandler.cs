@@ -2,7 +2,7 @@ using MediatR;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
 using RO.DevTest.Domain.Entities;
 
-namespace RO.DevTest.Application.Features.Client.Queries.GetClientByIdQuery
+namespace RO.DevTest.Application.Features.Clients.Queries.GetClientByIdQuery
 {
   public class GetClientByIdQueryHandler : IRequestHandler<GetClientByIdQuery, Client>
   {

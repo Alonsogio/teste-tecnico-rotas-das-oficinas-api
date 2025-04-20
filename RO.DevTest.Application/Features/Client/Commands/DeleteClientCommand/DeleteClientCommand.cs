@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace RO.DevTest.Application.Features.Client.Commands.DeleteClientCommand
+namespace RO.DevTest.Application.Features.Clients.Commands.DeleteClientCommand
 {
   public class DeleteClientCommand : IRequest
   {
