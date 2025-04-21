@@ -7,6 +7,13 @@ using RO.DevTest.Application.Features.Clients.Queries.GetClientsQuery;
 using RO.DevTest.Application.Features.Clients.Queries.GetClientByIdQuery;
 using RO.DevTest.Application.Features.Clients.Commands.UpdateClientCommand;
 using RO.DevTest.Application.Features.Clients.Commands.DeleteClientCommand;
+using RO.DevTest.Application.Features.Products.Queries.GetProductsQuery;
+using RO.DevTest.Application.Features.Products.Queries.GetProductByIdQuery;
+using RO.DevTest.Application.Features.Products.Commands.UpdateProductCommand;
+using RO.DevTest.Application.Features.Products.Commands.DeleteProductCommand;
+using FluentValidation.AspNetCore;
+using RO.DevTest.Application.Validators.Products;
+using RO.DevTest.Application.Validators.Clients;
 
 namespace RO.DevTest.WebApi;
 
@@ -16,10 +23,26 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+        .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.AllowTrailingCommas = true;
+        options.JsonSerializerOptions.ReadCommentHandling = System.Text.Json.JsonCommentHandling.Skip;
+    })
+
+    .AddFluentValidation(config =>
+    {
+        config.RegisterValidatorsFromAssemblyContaining<CreateProductCommandValidator>();
+        config.RegisterValidatorsFromAssemblyContaining<CreateClientCommandValidator>();
+
+    });
+
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<IClientRepository, ClientRepository>();
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
         builder.Services.InjectPersistenceDependencies()
             .InjectInfrastructureDependencies();
@@ -30,10 +53,18 @@ public class Program
             cfg.RegisterServicesFromAssemblies(
                 typeof(ApplicationLayer).Assembly,
                 typeof(Program).Assembly,
+
+                // clients
                 typeof(GetClientsQueryHandler).Assembly,
                 typeof(GetClientByIdQueryHandler).Assembly,
                 typeof(UpdateClientCommandHandler).Assembly,
-                typeof(DeleteClientCommandHandler).Assembly
+                typeof(DeleteClientCommandHandler).Assembly,
+
+                // products
+                typeof(GetProductsQueryHandler).Assembly,
+                typeof(GetProductByIdQueryHandler).Assembly,
+                typeof(UpdateProductCommandHandler).Assembly,
+                typeof(DeleteProductCommandHandler).Assembly
             );
         });
 
