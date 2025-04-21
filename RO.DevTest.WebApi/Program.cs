@@ -43,6 +43,7 @@ public class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<IClientRepository, ClientRepository>();
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 
         builder.Services.InjectPersistenceDependencies()
             .InjectInfrastructureDependencies();
