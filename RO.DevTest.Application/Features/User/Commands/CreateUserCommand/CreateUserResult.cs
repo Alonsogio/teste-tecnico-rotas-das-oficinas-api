@@ -1,4 +1,4 @@
-﻿namespace RO.DevTest.Application.Features.User.Commands.CreateUserCommand;
+﻿namespace RO.DevTest.Application.Features.Users.Commands.CreateUserCommand;
 
 public record CreateUserResult {
     public string Id { get; set; } = string.Empty;

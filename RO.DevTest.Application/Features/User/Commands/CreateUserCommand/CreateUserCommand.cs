@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using RO.DevTest.Domain.Enums;
 
-namespace RO.DevTest.Application.Features.User.Commands.CreateUserCommand;
+namespace RO.DevTest.Application.Features.Users.Commands.CreateUserCommand;
 
 public class CreateUserCommand : IRequest<CreateUserResult> {
     public string UserName { get; set; } = string.Empty;

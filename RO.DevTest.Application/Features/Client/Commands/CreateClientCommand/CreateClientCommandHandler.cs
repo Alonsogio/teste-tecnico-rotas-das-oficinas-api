@@ -1,6 +1,7 @@
 using MediatR;
 using RO.DevTest.Domain.Entities;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
+using System.Text.Json;
 
 namespace RO.DevTest.Application.Features.Clients.Commands.CreateClientCommand
 {

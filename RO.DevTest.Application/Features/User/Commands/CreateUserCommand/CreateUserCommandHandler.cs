@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using RO.DevTest.Application.Contracts.Infrastructure;
 using RO.DevTest.Domain.Exception;
 
-namespace RO.DevTest.Application.Features.User.Commands.CreateUserCommand;
+namespace RO.DevTest.Application.Features.Users.Commands.CreateUserCommand;
 
 /// <summary>
 /// Command handler for the creation of <see cref="Domain.Entities.User"/>
