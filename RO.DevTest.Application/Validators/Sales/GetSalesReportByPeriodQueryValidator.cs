@@ -7,11 +7,7 @@ namespace RO.DevTest.Application.Validators.Sales
   {
     public GetSalesReportByPeriodQueryValidator()
     {
-      RuleFor(x => x.Inicio)
-          .NotEmpty().WithMessage("A data de início é obrigatória");
-
       RuleFor(x => x.Fim)
-          .NotEmpty().WithMessage("A data de fim é obrigatória")
           .GreaterThanOrEqualTo(x => x.Inicio).WithMessage("A data de fim deve ser igual ou posterior à data de início");
 
       RuleFor(x => x)

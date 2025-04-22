@@ -1,7 +1,6 @@
 using MediatR;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
 
-
 namespace RO.DevTest.Application.Features.Sales.Queries.GetSalesReportByPeriodQuery
 {
   public class GetSalesReportByPeriodQueryHandler : IRequestHandler<GetSalesReportByPeriodQuery, SalesReportDto>
@@ -15,7 +14,10 @@ namespace RO.DevTest.Application.Features.Sales.Queries.GetSalesReportByPeriodQu
 
     public async Task<SalesReportDto> Handle(GetSalesReportByPeriodQuery request, CancellationToken cancellationToken)
     {
-      var vendas = await _saleRepository.GetByDateRangeAsync(request.Inicio, request.Fim);
+      var inicio = request.Inicio == default ? DateTime.UtcNow.AddDays(-30).Date : request.Inicio.Date;
+      var fim = request.Fim == default ? DateTime.UtcNow.Date : request.Fim.Date;
+
+      var vendas = await _saleRepository.GetByDateRangeAsync(inicio, fim);
 
       var produtos = vendas
           .SelectMany(v => v.Itens)
