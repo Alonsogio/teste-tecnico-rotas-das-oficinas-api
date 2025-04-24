@@ -1,11 +1,11 @@
+using RO.DevTest.Application.Contracts.Persistance.Repositories;
 using RO.DevTest.Domain.Entities;
 
 namespace RO.DevTest.Application.Contracts.Persistence.Repositories
 {
-  public interface ISaleRepository
+  public interface ISaleRepository : IBaseRepository<Sale>
   {
     private static readonly List<Sale> _sales = new();
-
     public Task AddAsync(Sale sale)
     {
       _sales.Add(sale);
@@ -28,7 +28,5 @@ namespace RO.DevTest.Application.Contracts.Persistence.Repositories
       var vendas = _sales.Where(v => v.Data.Date >= inicio.Date && v.Data.Date <= fim.Date).ToList();
       return Task.FromResult((IReadOnlyList<Sale>)vendas);
     }
-
-    Task DeleteAsync(Guid id);
   }
 }

@@ -12,15 +12,15 @@ using RO.DevTest.Persistence.Contexts;
 namespace RO.DevTest.Persistence.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250422144544_Pass")]
-    partial class Pass
+    [Migration("20250423184123_CreateDBTest")]
+    partial class CreateDBTest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -228,6 +228,8 @@ namespace RO.DevTest.Persistence.Migrations.ApplicationDb
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClienteId");
+
                     b.ToTable("Sales");
                 });
 
@@ -250,12 +252,14 @@ namespace RO.DevTest.Persistence.Migrations.ApplicationDb
                     b.Property<int>("Quantidade")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("SaleId")
+                    b.Property<Guid>("VendaId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SaleId");
+                    b.HasIndex("ProdutoId");
+
+                    b.HasIndex("VendaId");
 
                     b.ToTable("SaleItem");
                 });
@@ -379,11 +383,39 @@ namespace RO.DevTest.Persistence.Migrations.ApplicationDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RO.DevTest.Domain.Entities.Sale", b =>
+                {
+                    b.HasOne("RO.DevTest.Domain.Entities.Client", "Cliente")
+                        .WithMany("Vendas")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+                });
+
             modelBuilder.Entity("RO.DevTest.Domain.Entities.SaleItem", b =>
                 {
-                    b.HasOne("RO.DevTest.Domain.Entities.Sale", null)
+                    b.HasOne("RO.DevTest.Domain.Entities.Product", "Produto")
+                        .WithMany()
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RO.DevTest.Domain.Entities.Sale", "Venda")
                         .WithMany("Itens")
-                        .HasForeignKey("SaleId");
+                        .HasForeignKey("VendaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Produto");
+
+                    b.Navigation("Venda");
+                });
+
+            modelBuilder.Entity("RO.DevTest.Domain.Entities.Client", b =>
+                {
+                    b.Navigation("Vendas");
                 });
 
             modelBuilder.Entity("RO.DevTest.Domain.Entities.Sale", b =>

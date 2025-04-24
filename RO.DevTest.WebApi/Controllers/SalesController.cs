@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
 using RO.DevTest.Application.Features.Sales.Commands.CreateSaleCommand;
@@ -9,6 +10,7 @@ namespace RO.DevTest.WebApi.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
+  // [Authorize]
   public class SalesController : ControllerBase
   {
     private readonly IMediator _mediator;

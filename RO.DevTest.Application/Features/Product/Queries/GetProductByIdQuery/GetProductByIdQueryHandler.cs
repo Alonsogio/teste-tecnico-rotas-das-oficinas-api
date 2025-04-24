@@ -15,7 +15,12 @@ namespace RO.DevTest.Application.Features.Products.Queries.GetProductByIdQuery
 
     public async Task<Product> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-      return await _productRepository.GetByIdAsync(request.Id);
+      var product = await _productRepository.GetByIdAsync(request.Id);
+
+      if (product == null)
+        throw new KeyNotFoundException($"Produto com ID '{request.Id}' não foi encontrado.");
+
+      return product;
     }
   }
 }

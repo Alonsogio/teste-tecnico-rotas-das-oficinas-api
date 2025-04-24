@@ -1,9 +1,10 @@
+using System.Reflection.Metadata;
 using MediatR;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
 
 namespace RO.DevTest.Application.Features.Products.Commands.DeleteProductCommand
 {
-  public class DeleteProductCommandHandler(IProductRepository productRepository) : IRequestHandler<DeleteProductCommand>
+  public class DeleteProductCommandHandler(IProductRepository productRepository) : IRequestHandler<DeleteProductCommand, Unit>
   {
     private readonly IProductRepository _productRepository = productRepository;
 
@@ -11,11 +12,6 @@ namespace RO.DevTest.Application.Features.Products.Commands.DeleteProductCommand
     {
       await _productRepository.DeleteAsync(request.Id);
       return Unit.Value;
-    }
-
-    Task IRequestHandler<DeleteProductCommand>.Handle(DeleteProductCommand request, CancellationToken cancellationToken)
-    {
-      return Handle(request, cancellationToken);
     }
   }
 }

@@ -23,6 +23,8 @@ using Microsoft.IdentityModel.Tokens;
 
 using System.Text;
 using RO.DevTest.Application.Features.Auth.Commands.LoginCommand;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using RO.DevTest.Persistence;
 
 namespace RO.DevTest.WebApi;
 
@@ -32,9 +34,9 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // JWT Settings
+        // Configurações JWT
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
-
+        builder.Services.AddJwtAuthentication(builder.Configuration.GetSection("Jwt"));
 
         // Controllers + JSON options
         builder.Services.AddControllers()
@@ -71,19 +73,12 @@ public class Program
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 
-        // Dependências da aplicação
-        builder.Services.InjectPersistenceDependencies()
-                        .InjectInfrastructureDependencies();
+        builder.Services.InjectPersistenceDependencies(builder.Configuration).InjectInfrastructureDependencies();
 
         // Banco de Dados
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        builder.Services.AddDbContext<DefaultContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-        builder.Services.ConfigureApplicationCookie(options =>
-        {
-            options.Cookie.HttpOnly = true;
-            options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-        });
 
         // MediatR
         builder.Services.AddMediatR(cfg =>
@@ -113,6 +108,7 @@ public class Program
 
         var app = builder.Build();
 
+        // Middlewares
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -131,6 +127,8 @@ public class Program
         app.Run();
     }
 }
+
+// JWT Extension
 public static class JwtExtension
 {
     public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfigurationSection jwtSettings)
@@ -145,10 +143,10 @@ public static class JwtExtension
 
         services.AddAuthentication(options =>
         {
-            options.DefaultAuthenticateScheme = "JwtBearer";
-            options.DefaultChallengeScheme = "JwtBearer";
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
-        .AddJwtBearer("JwtBearer", options =>
+        .AddJwtBearer(options =>
         {
             options.TokenValidationParameters = new TokenValidationParameters
             {

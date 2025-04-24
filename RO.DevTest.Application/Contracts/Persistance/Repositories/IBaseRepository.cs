@@ -2,7 +2,8 @@
 
 namespace RO.DevTest.Application.Contracts.Persistance.Repositories;
 
-public interface IBaseRepository<T> where T : class {
+public interface IBaseRepository<T> where T : class
+{
 
     /// <summary>
     /// Creates a new entity in the database
@@ -11,6 +12,8 @@ public interface IBaseRepository<T> where T : class {
     /// <param name="cancellationToken"> Cancellation token </param>
     /// <returns> The created entity </returns>
     Task<T> CreateAsync(T entity, CancellationToken cancellationToken = default);
+
+    Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Finds the first entity that matches with the <paramref name="predicate"/>
@@ -27,11 +30,12 @@ public interface IBaseRepository<T> where T : class {
     /// Updates an entity entry on the database
     /// </summary>
     /// <param name="entity"> The entity to be added </param>
-    void Update(T entity);
+    Task Update(T entity);
 
     /// <summary>
     /// Deletes one entry from the database
     /// </summary>
     /// <param name="entity"> The entity to be deleted </param>
     void Delete(T entity);
+    Task DeleteAsync(Guid id);
 }

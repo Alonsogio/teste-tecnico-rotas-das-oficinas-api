@@ -6,11 +6,13 @@ using RO.DevTest.Application.Features.Products.Commands.DeleteProductCommand;
 using RO.DevTest.Application.Features.Products.Queries.GetProductByIdQuery;
 using RO.DevTest.Application.Features.Products.Commands.UpdateProductCommand;
 using RO.DevTest.Application.Features.Products.Queries.GetProductsQuery;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RO.DevTest.WebApi.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
+  // [Authorize]
   public class ProductsController : ControllerBase
   {
     private readonly IMediator _mediator;

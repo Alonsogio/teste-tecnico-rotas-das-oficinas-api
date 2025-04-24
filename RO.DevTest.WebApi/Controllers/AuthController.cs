@@ -4,17 +4,18 @@ using NSwag.Annotations;
 using RO.DevTest.Application.Features.Auth.Commands.LoginCommand;
 using MediatR;
 using RO.DevTest.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RO.DevTest.WebApi.Controllers
 {
     [ApiController]
     [Route("api/auth")]
     [OpenApiTags("Auth")]
+    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager = default!;
 
         public AuthController(IMediator mediator)
         {

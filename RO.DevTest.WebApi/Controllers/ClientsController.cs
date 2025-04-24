@@ -6,11 +6,13 @@ using RO.DevTest.Application.Features.Clients.Commands.DeleteClientCommand;
 using RO.DevTest.Application.Features.Clients.Queries.GetClientByIdQuery;
 using RO.DevTest.Application.Features.Clients.Commands.UpdateClientCommand;
 using RO.DevTest.Application.Features.Clients.Queries.GetClientsQuery;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RO.DevTest.WebApi.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
+  // [Authorize]
   public class ClientsController : ControllerBase
   {
     private readonly IMediator _mediator;
@@ -21,6 +23,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Create(CreateClientCommand command)
     {
       var id = await _mediator.Send(command);

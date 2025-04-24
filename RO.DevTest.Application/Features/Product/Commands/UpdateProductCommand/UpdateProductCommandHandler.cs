@@ -23,7 +23,7 @@ namespace RO.DevTest.Application.Features.Products.Commands.UpdateProductCommand
       product.Estoque = request.Estoque;
       product.Preco = request.Preco;
 
-      await _productRepository.UpdateAsync(product);
+      await _productRepository.Update(product);
       return Unit.Value;
     }
   }

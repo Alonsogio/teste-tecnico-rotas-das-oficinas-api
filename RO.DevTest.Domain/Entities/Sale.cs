@@ -6,6 +6,8 @@ namespace RO.DevTest.Domain.Entities
     public Guid ClienteId { get; set; }
     public DateTime Data { get; set; } = DateTime.UtcNow;
     public decimal Total { get; set; }
+
+    public Client Cliente { get; set; } = null!;
     public List<SaleItem> Itens { get; set; } = new();
   }
 
@@ -16,5 +18,7 @@ namespace RO.DevTest.Domain.Entities
     public string Nome { get; set; } = string.Empty;
     public decimal PrecoUnitario { get; set; }
     public int Quantidade { get; set; }
+    public Product Produto { get; set; } = null!;
+    public Sale Venda { get; set; } = null!;
   }
 }

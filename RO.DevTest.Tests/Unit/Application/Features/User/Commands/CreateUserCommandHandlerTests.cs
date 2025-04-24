@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using RO.DevTest.Application.Contracts.Infrastructure;
-using RO.DevTest.Application.Features.User.Commands.CreateUserCommand;
+using RO.DevTest.Application.Features.Users.Commands.CreateUserCommand;
 using RO.DevTest.Domain.Exception;
 
 namespace RO.DevTest.Tests.Unit.Application.Features.User.Commands;

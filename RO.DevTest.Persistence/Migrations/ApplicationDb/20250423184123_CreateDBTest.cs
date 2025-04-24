@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace RO.DevTest.Persistence.Migrations.ApplicationDb
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class CreateDBTest : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -81,20 +81,6 @@ namespace RO.DevTest.Persistence.Migrations.ApplicationDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Sales",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ClienteId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Data = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Total = table.Column<decimal>(type: "numeric", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sales", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -204,6 +190,26 @@ namespace RO.DevTest.Persistence.Migrations.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sales",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ClienteId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Data = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Total = table.Column<decimal>(type: "numeric", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sales", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sales_Clients_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SaleItem",
                 columns: table => new
                 {
@@ -212,16 +218,23 @@ namespace RO.DevTest.Persistence.Migrations.ApplicationDb
                     Nome = table.Column<string>(type: "text", nullable: false),
                     PrecoUnitario = table.Column<decimal>(type: "numeric", nullable: false),
                     Quantidade = table.Column<int>(type: "integer", nullable: false),
-                    SaleId = table.Column<Guid>(type: "uuid", nullable: true)
+                    VendaId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SaleItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SaleItem_Sales_SaleId",
-                        column: x => x.SaleId,
+                        name: "FK_SaleItem_Products_ProdutoId",
+                        column: x => x.ProdutoId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SaleItem_Sales_VendaId",
+                        column: x => x.VendaId,
                         principalTable: "Sales",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -262,9 +275,19 @@ namespace RO.DevTest.Persistence.Migrations.ApplicationDb
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SaleItem_SaleId",
+                name: "IX_SaleItem_ProdutoId",
                 table: "SaleItem",
-                column: "SaleId");
+                column: "ProdutoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SaleItem_VendaId",
+                table: "SaleItem",
+                column: "VendaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sales_ClienteId",
+                table: "Sales",
+                column: "ClienteId");
         }
 
         /// <inheritdoc />
@@ -286,12 +309,6 @@ namespace RO.DevTest.Persistence.Migrations.ApplicationDb
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Clients");
-
-            migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
                 name: "SaleItem");
 
             migrationBuilder.DropTable(
@@ -301,7 +318,13 @@ namespace RO.DevTest.Persistence.Migrations.ApplicationDb
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
                 name: "Sales");
+
+            migrationBuilder.DropTable(
+                name: "Clients");
         }
     }
 }

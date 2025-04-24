@@ -13,8 +13,8 @@ namespace RO.DevTest.Application.Features.Auth.Commands.LoginCommand;
 
 public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 {
-    private readonly UserManager<User> _userManager;
-    private readonly SignInManager<User> _signInManager;
+    private readonly UserManager<User> _userManager = default!;
+    private readonly SignInManager<User> _signInManager = default!;
     private readonly JwtSettings _jwtSettings;
 
     public LoginCommandHandler(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<JwtSettings> jwtSettings)

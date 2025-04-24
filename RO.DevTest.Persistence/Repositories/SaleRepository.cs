@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
 using RO.DevTest.Domain.Entities;
 
@@ -7,10 +8,10 @@ namespace RO.DevTest.Persistence.Repositories
     {
         private static readonly List<Sale> _sales = new();
 
-        public Task AddAsync(Sale sale)
+        public Task<Sale> AddAsync(Sale sale, CancellationToken cancellationToken = default)
         {
             _sales.Add(sale);
-            return Task.CompletedTask;
+            return (Task<Sale>)Task.CompletedTask;
         }
 
         public Task<IReadOnlyList<Sale>> GetAllAsync()
@@ -44,6 +45,25 @@ namespace RO.DevTest.Persistence.Repositories
                 _sales.Remove(sale);
             }
             return Task.CompletedTask;
+        }
+
+        public Task<Sale> CreateAsync(Sale entity, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Sale? Get(Expression<Func<Sale, bool>> predicate, params Expression<Func<Sale, object>>[] includes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(Sale entity)
+        {
+            throw new NotImplementedException();
+        }
+        public void Delete(Sale entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

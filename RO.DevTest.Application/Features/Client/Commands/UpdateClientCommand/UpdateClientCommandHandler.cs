@@ -22,7 +22,7 @@ namespace RO.DevTest.Application.Features.Clients.Commands.UpdateClientCommand
       client.Email = request.Email;
       client.Telefone = request.Telefone;
 
-      await _clientRepository.UpdateAsync(client);
+      await _clientRepository.Update(client);
       return Unit.Value;
     }
   }

@@ -36,7 +36,7 @@ namespace RO.DevTest.Application.Features.Sales.Commands.CreateSaleCommand
           throw new Exception($"Estoque insuficiente para o produto {produto.Nome}");
 
         produto.Estoque -= item.Quantidade;
-        await _productRepository.UpdateAsync(produto);
+        await _productRepository.Update(produto);
 
         var precoUnitario = produto.Preco;
         total += precoUnitario * item.Quantidade;

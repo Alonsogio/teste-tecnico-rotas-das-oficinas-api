@@ -15,7 +15,12 @@ namespace RO.DevTest.Application.Features.Clients.Queries.GetClientByIdQuery
 
     public async Task<Client> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
     {
-      return await _clientRepository.GetByIdAsync(request.Id);
+
+      var clientId = await _clientRepository.GetByIdAsync(request.Id);
+      if (clientId == null)
+        throw new KeyNotFoundException($"Client com ID '{request.Id}' não foi encontrado.");
+
+      return clientId;
     }
   }
 }
