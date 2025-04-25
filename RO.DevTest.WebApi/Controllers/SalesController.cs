@@ -10,7 +10,7 @@ namespace RO.DevTest.WebApi.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
-  // [Authorize]
+  [Authorize(Roles = "Admin, Customer")]
   public class SalesController : ControllerBase
   {
     private readonly IMediator _mediator;
@@ -32,6 +32,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpGet("relatorio")]
+
     public async Task<IActionResult> GetReport([FromQuery] DateTime inicio, [FromQuery] DateTime fim)
     {
       var query = new GetSalesReportByPeriodQuery { Inicio = inicio, Fim = fim };

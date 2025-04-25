@@ -8,13 +8,12 @@ using Microsoft.IdentityModel.Tokens;
 using RO.DevTest.Domain.Entities;
 using RO.DevTest.WebApi;
 
-
 namespace RO.DevTest.Application.Features.Auth.Commands.LoginCommand;
 
 public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 {
-    private readonly UserManager<User> _userManager = default!;
-    private readonly SignInManager<User> _signInManager = default!;
+    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
     private readonly JwtSettings _jwtSettings;
 
     public LoginCommandHandler(UserManager<User> userManager, SignInManager<User> signInManager, IOptions<JwtSettings> jwtSettings)
@@ -23,7 +22,6 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
         _signInManager = signInManager;
         _jwtSettings = jwtSettings.Value;
     }
-
 
     public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
@@ -35,6 +33,9 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
         if (!result.Succeeded)
             throw new UnauthorizedAccessException("Credenciais inválidas");
 
+
+        var roles = await _userManager.GetRolesAsync(user);
+
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id),
@@ -42,12 +43,14 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
             new Claim(ClaimTypes.Name, user.Name ?? string.Empty)
         };
 
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: "DevTestIssuer",
-            audience: "DevTestAudience",
+            issuer: _jwtSettings.Issuer,
+            audience: _jwtSettings.Audience,
             claims: claims,
             expires: DateTime.UtcNow.AddHours(2),
             signingCredentials: creds
@@ -59,7 +62,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
         {
             AccessToken = tokenString,
             ExpirationDate = token.ValidTo,
-            Roles = new List<string>()
+            Roles = roles
         };
     }
 }

@@ -12,7 +12,7 @@ namespace RO.DevTest.WebApi.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
-  // [Authorize]
+  [Authorize(Roles = "Admin, Customer")]
   public class ProductsController : ControllerBase
   {
     private readonly IMediator _mediator;
@@ -23,6 +23,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpPost]
+
     public async Task<IActionResult> Create(CreateProductCommand command)
     {
       var id = await _mediator.Send(command);

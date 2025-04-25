@@ -6,20 +6,20 @@ using System.IO;
 
 namespace RO.DevTest.Persistence.Contexts
 {
-    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<DefaultContext>
     {
-        public ApplicationDbContext CreateDbContext(string[] args)
+        public DefaultContext CreateDbContext(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../RO.DevTest.WebApi")))
                 .AddJsonFile("appsettings.json", optional: false)
                 .Build();
 
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<DefaultContext>();
             var connectionString = config.GetConnectionString("DefaultConnection");
             optionsBuilder.UseNpgsql(connectionString);
 
-            return new ApplicationDbContext(optionsBuilder.Options);
+            return new DefaultContext(optionsBuilder.Options);
         }
     }
 }
