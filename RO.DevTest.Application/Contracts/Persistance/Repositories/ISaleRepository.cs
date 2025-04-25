@@ -6,12 +6,6 @@ namespace RO.DevTest.Application.Contracts.Persistence.Repositories
   public interface ISaleRepository : IBaseRepository<Sale>
   {
     private static readonly List<Sale> _sales = new();
-    public Task AddAsync(Sale sale)
-    {
-      _sales.Add(sale);
-      return Task.CompletedTask;
-    }
-
     public Task<IReadOnlyList<Sale>> GetAllAsync()
     {
       return Task.FromResult((IReadOnlyList<Sale>)_sales.ToList());

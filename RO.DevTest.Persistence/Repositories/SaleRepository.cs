@@ -10,8 +10,9 @@ namespace RO.DevTest.Persistence.Repositories
 
         public Task<Sale> AddAsync(Sale sale, CancellationToken cancellationToken = default)
         {
+            sale.Id = Guid.NewGuid();
             _sales.Add(sale);
-            return (Task<Sale>)Task.CompletedTask;
+            return Task.FromResult(sale);
         }
 
         public Task<IReadOnlyList<Sale>> GetAllAsync()
@@ -61,7 +62,7 @@ namespace RO.DevTest.Persistence.Repositories
         {
             throw new NotImplementedException();
         }
-        public void Delete(Sale entity)
+        public Task Delete(Sale entity)
         {
             throw new NotImplementedException();
         }

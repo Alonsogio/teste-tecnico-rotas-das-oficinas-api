@@ -1,5 +1,6 @@
 using MediatR;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
+using RO.DevTest.Domain.Exception;
 
 namespace RO.DevTest.Application.Features.Products.Commands.UpdateProductCommand
 {
@@ -14,9 +15,12 @@ namespace RO.DevTest.Application.Features.Products.Commands.UpdateProductCommand
 
     public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
+      if (string.IsNullOrWhiteSpace(request.Nome))
+        throw new BadRequestException("Nome é obrigatório");
+
       var product = await _productRepository.GetByIdAsync(request.Id);
       if (product == null)
-        throw new Exception("Produto não encontrado");
+        throw new BadRequestException("Produto não encontrado");
 
       product.Nome = request.Nome;
       product.Descricao = request.Descricao;

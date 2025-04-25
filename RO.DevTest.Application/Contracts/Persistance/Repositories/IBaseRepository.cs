@@ -36,6 +36,6 @@ public interface IBaseRepository<T> where T : class
     /// Deletes one entry from the database
     /// </summary>
     /// <param name="entity"> The entity to be deleted </param>
-    void Delete(T entity);
+    Task Delete(T entity);
     Task DeleteAsync(Guid id);
 }

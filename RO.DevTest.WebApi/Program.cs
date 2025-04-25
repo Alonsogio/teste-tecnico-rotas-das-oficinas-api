@@ -22,7 +22,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 using System.Text;
-using RO.DevTest.Application.Features.Auth.Commands.LoginCommand;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using RO.DevTest.Persistence;
 
@@ -99,10 +98,7 @@ public class Program
                 typeof(DeleteProductCommandHandler).Assembly,
 
                 // Sales
-                typeof(DeleteSaleCommandHandler).Assembly,
-
-                // Login
-                typeof(LoginCommandHandler).Assembly
+                typeof(DeleteSaleCommandHandler).Assembly
             );
         });
 

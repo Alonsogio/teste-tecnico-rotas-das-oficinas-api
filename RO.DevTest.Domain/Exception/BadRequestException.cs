@@ -10,7 +10,8 @@ namespace RO.DevTest.Domain.Exception;
 /// Returns a <see cref="HttpStatusCode.BadRequest"/> to
 /// the request
 /// </summary>
-public class BadRequestException : ApiException {
+public class BadRequestException : ApiException
+{
     public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
     public BadRequestException(IdentityResult result) : base(result) { }
     public BadRequestException(string error) : base(error) { }

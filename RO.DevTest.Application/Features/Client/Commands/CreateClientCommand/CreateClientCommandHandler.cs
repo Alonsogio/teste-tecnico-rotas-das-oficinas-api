@@ -1,7 +1,9 @@
 using MediatR;
 using RO.DevTest.Domain.Entities;
 using RO.DevTest.Application.Contracts.Persistence.Repositories;
-using System.Text.Json;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RO.DevTest.Application.Features.Clients.Commands.CreateClientCommand
 {
@@ -24,6 +26,7 @@ namespace RO.DevTest.Application.Features.Clients.Commands.CreateClientCommand
       };
 
       await _clientRepository.AddAsync(client);
+
       return client.Id;
     }
   }
