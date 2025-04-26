@@ -7,6 +7,7 @@ using RO.DevTest.Application.Features.Clients.Queries.GetClientByIdQuery;
 using RO.DevTest.Application.Features.Clients.Commands.UpdateClientCommand;
 using RO.DevTest.Application.Features.Clients.Queries.GetClientsQuery;
 using Microsoft.AspNetCore.Authorization;
+using NSwag.Annotations;
 
 namespace RO.DevTest.WebApi.Controllers
 {
@@ -22,6 +23,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpPost]
+    [OpenApiOperation("Criar um novo cliente", "Cria um novo cliente no sistema.")]
     [AllowAnonymous]
     public async Task<IActionResult> Create(CreateClientCommand command)
     {
@@ -30,6 +32,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpGet("{id}")]
+    [OpenApiOperation("Pegar um cliente por id", "Retorna um cliente no sistema.")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<Client>> GetById(Guid id)
     {
@@ -40,6 +43,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpGet]
+    [OpenApiOperation("Pegar todos os clientes", "Retorna todos os clientes no sistema.")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<IEnumerable<Client>>> GetAll([FromQuery] GetClientsQuery query)
     {
@@ -48,6 +52,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpPut("{id}")]
+    [OpenApiOperation("Edita um cliente", "Edita um cliente no sistema.")]
     [Authorize(Roles = "Admin, Customer")]
 
     public async Task<IActionResult> Update(Guid id, UpdateClientCommand command)
@@ -58,6 +63,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpDelete("{id}")]
+    [OpenApiOperation("Deleta um cliente", "Deleta um cliente no sistema.")]
     [Authorize(Roles = "Admin, Customer")]
     public async Task<IActionResult> Delete(Guid id)
     {

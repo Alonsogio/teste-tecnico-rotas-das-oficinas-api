@@ -5,6 +5,7 @@ using RO.DevTest.Application.Contracts.Persistence.Repositories;
 using RO.DevTest.Application.Features.Sales.Commands.CreateSaleCommand;
 using RO.DevTest.Application.Features.Sales.Commands.DeleteSaleCommand;
 using RO.DevTest.Application.Features.Sales.Queries.GetSalesReportByPeriodQuery;
+using NSwag.Annotations;
 
 namespace RO.DevTest.WebApi.Controllers
 {
@@ -23,6 +24,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpPost]
+    [OpenApiOperation("Criar uma nova venda", "Cria uma nova venda no sistema.")]
     public async Task<IActionResult> Create([FromBody] CreateSaleCommand command)
     {
 
@@ -32,6 +34,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpGet("relatorio")]
+    [OpenApiOperation("Retorna relatorio de vendas", "Retorna um relatorio de vendas no sistema.")]
 
     public async Task<IActionResult> GetReport([FromQuery] DateTime inicio, [FromQuery] DateTime fim)
     {
@@ -41,6 +44,7 @@ namespace RO.DevTest.WebApi.Controllers
     }
 
     [HttpDelete("{id}")]
+    [OpenApiOperation("Deleta uma venda", "Deleta uma venda no sistema.")]
     public async Task<IActionResult> Delete(Guid id)
     {
       await _mediator.Send(new DeleteSaleCommand { Id = id });

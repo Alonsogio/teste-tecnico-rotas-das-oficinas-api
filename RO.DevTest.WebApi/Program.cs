@@ -13,7 +13,6 @@ using RO.DevTest.Application.Features.Products.Commands.UpdateProductCommand;
 using RO.DevTest.Application.Features.Products.Commands.DeleteProductCommand;
 using RO.DevTest.Application.Features.Sales.Commands.DeleteSaleCommand;
 using RO.DevTest.Application.Validators.Products;
-using RO.DevTest.Persistence.Contexts;
 
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -108,7 +107,11 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(c =>
+             {
+                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevTest API v1");
+                 c.RoutePrefix = "swagger";
+             });
         }
 
         app.UseHttpsRedirection();
