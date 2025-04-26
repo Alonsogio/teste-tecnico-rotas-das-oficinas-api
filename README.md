@@ -49,7 +49,7 @@ A API já possui um Dockerfile configurado.
 
 # Buildar a imagem
 
-docker build -t ro-devtest-api
+docker build -t ro-devtest-api .
 
 # Rodar o container
 
