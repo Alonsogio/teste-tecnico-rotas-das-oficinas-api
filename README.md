@@ -1,8 +1,9 @@
 # Rota das Oficinas Tecnical Test
+
 This project is the template to be used to create a basic e-commerce Web API.
 It already contains the basic structure of a API, that must be followed when adding more features.
 
-Some caracteristics of this template that  are:
+Some caracteristics of this template that are:
 
 - Built using .NET 8.0
 - Uses EntityFramework Core as it's ORM
@@ -11,11 +12,45 @@ Some caracteristics of this template that  are:
 - Uses Xunit, Bogus and FluentAssertions to create tests
 
 ## To Dos in the Project
-In the template there are some left unfinnished features that you must do to correctly create the API. Search **[TODO]**  to find theses features.
+
+In the template there are some left unfinnished features that you must do to correctly create the API. Search **[TODO]** to find theses features.
 
 ## Feel Free to Optimize or Refactor
+
 If you find some code that you think can be enhanced, feel free to refactor it. But the refactor should follow the patterns of the project. Also the refactor should be separeted onn it's own commit.
 
 ## Creating a FrontEnd
+
 When creating the frontend you can choose any framework you want, but your application must connect with the Web API via HTTP requests, and it's code must be in the same repository as the Web API.
 
+## 📚 API Documentation
+
+Após subir a aplicação, a documentação dos endpoints estará disponível em:
+
+🔗 [https://localhost:5087/swagger/index.html](https://localhost:5087/swagger/index.html)
+
+## Rodando localmente via terminal:
+
+# 1. Clone o repositório
+
+git clone https://github.com/Alonsogio/teste-tecnico-rotas-das-oficinas.git
+
+# 2. Acesse a pasta
+
+cd RO.DevTest.WebApi
+
+# 3. Rode o projeto
+
+dotnet run --project RO.DevTest.WebApi
+
+## Rodando com Docker
+
+A API já possui um Dockerfile configurado.
+
+# Buildar a imagem
+
+docker build -t ro-devtest-api
+
+# Rodar o container
+
+docker run -d -p 5087:80 ro-devtest-api

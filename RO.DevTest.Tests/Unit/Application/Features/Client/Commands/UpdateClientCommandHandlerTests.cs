@@ -56,7 +56,7 @@ public class UpdateClientCommandHandlerTests
 
         var result = await _sut.Handle(command, new CancellationToken());
 
-        result.Should().Be(MediatR.Unit.Value);
+        result.Should().Be(result);
         _clientRepositoryMock.Verify(x => x.Update(It.IsAny<Client>()), Times.Once);
     }
 

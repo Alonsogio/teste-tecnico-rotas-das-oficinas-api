@@ -27,8 +27,8 @@ namespace RO.DevTest.WebApi.Controllers
     [OpenApiOperation("Criar um novo produto", "Cria um novo produto no sistema.")]
     public async Task<IActionResult> Create(CreateProductCommand command)
     {
-      var id = await _mediator.Send(command);
-      return CreatedAtAction(nameof(GetById), new { id }, null);
+      var product = await _mediator.Send(command);
+      return CreatedAtAction(nameof(GetById), new { id = product }, product);
     }
 
     [HttpGet("{id}")]
@@ -53,8 +53,9 @@ namespace RO.DevTest.WebApi.Controllers
     public async Task<IActionResult> Update(Guid id, UpdateProductCommand command)
     {
       if (id != command.Id) return BadRequest("ID da URL difere do corpo da requisição");
-      await _mediator.Send(command);
-      return NoContent();
+      var updatedProduct = await _mediator.Send(command);
+
+      return Ok(updatedProduct);
     }
 
     [HttpDelete("{id}")]

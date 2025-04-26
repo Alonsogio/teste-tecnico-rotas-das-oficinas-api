@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RO.DevTest.Application.Features.Clients.Commands.CreateClientCommand
 {
-  public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Guid>
+  public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Client>
   {
     private readonly IClientRepository _clientRepository;
 
@@ -16,7 +16,7 @@ namespace RO.DevTest.Application.Features.Clients.Commands.CreateClientCommand
       _clientRepository = clientRepository;
     }
 
-    public async Task<Guid> Handle(CreateClientCommand request, CancellationToken cancellationToken)
+    public async Task<Client> Handle(CreateClientCommand request, CancellationToken cancellationToken)
     {
       var client = new Client
       {
@@ -27,7 +27,7 @@ namespace RO.DevTest.Application.Features.Clients.Commands.CreateClientCommand
 
       await _clientRepository.AddAsync(client);
 
-      return client.Id;
+      return client;
     }
   }
 }
