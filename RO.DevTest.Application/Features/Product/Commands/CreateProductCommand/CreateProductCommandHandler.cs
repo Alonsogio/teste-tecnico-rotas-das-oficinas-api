@@ -5,7 +5,7 @@ using RO.DevTest.Domain.Exception;
 
 namespace RO.DevTest.Application.Features.Products.Commands.CreateProductCommand
 {
-  public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Guid>
+  public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Product>
   {
     private readonly IProductRepository _productRepository;
 
@@ -14,7 +14,7 @@ namespace RO.DevTest.Application.Features.Products.Commands.CreateProductCommand
       _productRepository = productRepository;
     }
 
-    public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
       if (string.IsNullOrWhiteSpace(request.Nome))
         throw new BadRequestException("O nome do produto é obrigatório.");
@@ -37,7 +37,7 @@ namespace RO.DevTest.Application.Features.Products.Commands.CreateProductCommand
       };
 
       await _productRepository.AddAsync(product);
-      return product.Id;
+      return product;
     }
   }
 }

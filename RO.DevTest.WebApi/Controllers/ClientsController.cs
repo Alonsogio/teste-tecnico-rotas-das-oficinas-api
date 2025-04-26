@@ -27,8 +27,8 @@ namespace RO.DevTest.WebApi.Controllers
     [AllowAnonymous]
     public async Task<IActionResult> Create(CreateClientCommand command)
     {
-      var id = await _mediator.Send(command);
-      return CreatedAtAction(nameof(GetById), new { id }, null);
+      var client = await _mediator.Send(command);
+      return CreatedAtAction(nameof(GetById), new { id = client }, client);
     }
 
     [HttpGet("{id}")]
@@ -58,8 +58,10 @@ namespace RO.DevTest.WebApi.Controllers
     public async Task<IActionResult> Update(Guid id, UpdateClientCommand command)
     {
       if (id != command.Id) return BadRequest("ID da URL difere do corpo da requisição");
-      await _mediator.Send(command);
-      return NoContent();
+
+      var updatedClient = await _mediator.Send(command);
+
+      return Ok(updatedClient);
     }
 
     [HttpDelete("{id}")]

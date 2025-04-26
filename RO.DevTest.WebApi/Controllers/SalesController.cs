@@ -27,7 +27,6 @@ namespace RO.DevTest.WebApi.Controllers
     [OpenApiOperation("Criar uma nova venda", "Cria uma nova venda no sistema.")]
     public async Task<IActionResult> Create([FromBody] CreateSaleCommand command)
     {
-
       var id = await _mediator.Send(command);
       var vendaCriada = await _saleRepository.GetByIdAsync(id);
       return CreatedAtAction(nameof(GetReport), new { id }, vendaCriada);
